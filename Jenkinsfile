@@ -20,6 +20,7 @@ pipeline {
                 '''
             }
         }
+
         stage("Build") {
             steps {
                 echo "Building Docker image"
@@ -29,6 +30,7 @@ pipeline {
                 '''
             }
         }
+
         stage("Start Application Container") {
             steps {
                 echo "Starting application container"
@@ -37,6 +39,7 @@ pipeline {
                 '''
             }
         }
+
         stage("Test Containerised Application") {
             steps {
                 echo "Testing container application"
@@ -45,46 +48,38 @@ pipeline {
                 '''
             }
         }
-        stage("Deploy to Cloud") {
-            when {
-                branch 'Release'
-            }
-            steps {
-                withAWS(region: 'ap-southeast-1') {
-                    //deploy release to cloud
-                }                    
+    }
+
+    post {
+
+        always {
+            echo "Cleaning up the workspace"
+            dir("${WORKSPACE) {
+                sh '''
+                    docker rm -f one2onetoolTest
+                    docker rmi one2onetool:${BUILD_TAG}
+                '''
+            }                
+        }
+
+        success {
+            script {
+                echo "Jenkins build success. Generating Git Tag"
+                sh '''
+                    git tag -a ${BUILD_TAG} -m 'Jenkins build success: ${BUILD_TAG}'
+                    git push origin ${BUILD_TAG}
+                '''
             }
         }
 
-        post {
-            always {
-                echo "Cleaning up the workspace"
-                dir("${WORKSPACE) {
-                    sh '''
-                        docker rm -f one2onetoolTest
-                        docker rmi one2onetool:${BUILD_TAG}
-                    '''
-                }                
-            }
-            success {
-                script {
-                    echo "Jenkins build success. Generating Git Tag"
-                    sh '''
-                        git tag -a ${BUILD_TAG} -m 'Jenkins build success: ${BUILD_TAG}'
-                        git push origin ${BUILD_TAG}
-                    '''
-                }
-            }
-            failure {
-                script {
-                    echo "Jenkins build failed. Generating Git Tag"
-                    sh '''
-                        git tag -a ${BUILD_TAG} -m 'Jenkins build ${BUILD_TAG} failed at stage ${STAGE_NAME}'
-                        git push origin ${BUILD_TAG}
-                    '''
-                }
+        failure {
+            script {
+                echo "Jenkins build failed. Generating Git Tag"
+                sh '''
+                    git tag -a ${BUILD_TAG} -m 'Jenkins build ${BUILD_TAG} failed at stage ${STAGE_NAME}'
+                    git push origin ${BUILD_TAG}
+                '''
             }
         }
-
     }
 }
