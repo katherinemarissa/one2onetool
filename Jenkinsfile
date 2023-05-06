@@ -6,10 +6,6 @@ pipeline {
         jdk 'Java Version 17.0.7'
     }
 
-    environment {
-        DATA_FILE = 'Questions-test.json'
-    }
-
     stages {
 
         stage("Testing Before Containerisation") {
