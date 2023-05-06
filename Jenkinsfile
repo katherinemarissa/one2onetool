@@ -42,9 +42,6 @@ pipeline {
             }
         }
         stage("Deploy to Cloud") {
-            when {
-                branch 'Release'
-            }
             steps {
                 withAWS(region: 'ap-southeast-1') {
                     //deploy release to cloud
@@ -81,6 +78,11 @@ pipeline {
                     git tag -a ${BUILD_TAG} -m 'Jenkins build ${BUILD_TAG} failed at stage ${STAGE_NAME}'
                     git push origin ${BUILD_TAG}
                 '''
+
+                echo "Send email"
+                mail to: "dev@gmail.com", 
+                subject: "Jenkins Build Failure: ${BUILD_TAG}", 
+                body: "Jenkins build ${BUILD_TAG} failed at stage ${STAGE_NAME}"
             }
         }
     }
