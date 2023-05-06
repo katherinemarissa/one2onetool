@@ -53,12 +53,10 @@ pipeline {
 
         always {
             echo "Cleaning up the workspace"
-            dir("${WORKSPACE) {
-                sh '''
+            sh '''
                     docker rm -f one2onetoolTest
                     docker rmi one2onetool:${BUILD_TAG}
-                '''
-            }                
+                '''           
         }
 
         success {
