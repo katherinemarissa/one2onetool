@@ -1,7 +1,5 @@
 FROM node:18.16
 
-ENV DATA_FILE Questions-test.json
-
 WORKDIR /app
 
 COPY package*.json ./
