@@ -62,20 +62,24 @@ pipeline {
         success {
             script {
                 echo "Jenkins build success. Generating Git Tag"
-                sh '''
-                    git tag -a ${BUILD_TAG} -m 'Jenkins build success: ${BUILD_TAG}'
-                    git push origin ${BUILD_TAG}
-                '''
+                withCredentials([string(credentialsId: 'GitHub-PAT', variable: 'GIT_TOKEN')]) {
+                    sh '''
+                        git tag -a ${BUILD_TAG} -m 'Jenkins build success: ${BUILD_TAG}'
+                        git push origin ${BUILD_TAG}
+                    '''
+                }
             }
         }
 
         failure {
             script {
                 echo "Jenkins build failed. Generating Git Tag"
-                sh '''
-                    git tag -a ${BUILD_TAG} -m 'Jenkins build ${BUILD_TAG} failed at stage ${STAGE_NAME}'
-                    git push origin ${BUILD_TAG}
-                '''
+                withCredentials([string(credentialsId: 'GitHub-PAT', variable: 'GIT_TOKEN')]) {
+                    sh '''
+                        git tag -a ${BUILD_TAG} -m 'Jenkins build ${BUILD_TAG} failed at stage ${STAGE_NAME}'
+                        git push origin ${BUILD_TAG}
+                    '''
+                }
 
                 echo "Send email"
                 mail to: "dev@gmail.com", 
