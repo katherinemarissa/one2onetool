@@ -1,3 +1,5 @@
+def email = ""
+
 pipeline {
 
     agent any
@@ -92,7 +94,7 @@ pipeline {
                     '''
                 }
                 echo "Send email"
-                mail to: "dev@gmail.com", 
+                mail to: "${email}", 
                 subject: "Jenkins Build Failure: STAGING-${BUILD_TAG}", 
                 body: "Jenkins build STAGING-${BUILD_TAG} failed at stage ${STAGE_NAME}"
             }
