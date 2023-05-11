@@ -69,9 +69,7 @@ pipeline {
 
         always {
             echo "Cleaning up the workspace"
-            sh '''
-                    docker rmi one2onetool:RELEASE-${BUILD_TAG} one2onetool:latest
-                '''           
+            sh "docker rmi one2onetool:RELEASE-${BUILD_TAG} one2onetool:latest"         
         }
 
         success {
