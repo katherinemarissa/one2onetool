@@ -12,6 +12,7 @@ This CI/CD pipeline is triggered on new commits and performs the following:
 ## Add the following parameters to Jenkinsfile:
 * AWS-Account-Number
 * Credential-ID
+* email (Email address to receive notifications on build failure)
 
 ## Set up Jenkins
 Install Jenkins for Windows: https://www.jenkins.io/doc/book/installing/windows/
