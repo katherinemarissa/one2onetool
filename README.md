@@ -10,8 +10,8 @@ This CI/CD pipeline is triggered on new commits and performs the following:
 2 branches - Staging and Release - were added with their own Jenkinsfile. Create a Multibranch Pipeline job in Jenkins and link it to this repository.
 
 ## Add the following parameters to Jenkinsfile:
-* <AWS-Account-Number>
-* <Credential-ID>
+* AWS-Account-Number
+* Credential-ID
 
 ## Set up Jenkins
 Install Jenkins for Windows: https://www.jenkins.io/doc/book/installing/windows/
