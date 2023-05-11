@@ -60,7 +60,7 @@ pipeline {
                         taskDefinition: "${ECS_TASK_DEFINITION}",
                         service: "${ECS_SERVICE_NAME}",
                         cluster: "${ECS_CLUSTER_NAME}",
-                        image: "${one2onetool:RELEASE-${BUILD_TAG}"}",
+                        image: "one2onetool:RELEASE-${BUILD_TAG}",
                         waitForServiceStability: true
                     )
                 }
