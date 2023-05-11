@@ -23,4 +23,8 @@ Guide: https://docs.github.com/en/webhooks-and-events/webhooks/creating-webhooks
 
 ### Create a new Multibranch Pipeline job
 A multibranch pipeline job scans the repository and looks for the `Jenkinsfile` in each branch to run a build on
+* Under Branch Sources, choose GitHub and add in GitHub repo URL
+* Build Configuration
+  - Mode: by Jenkinsfile
+  - Script Path: Jenkinsfile (this is path for Jenkins to find Jenkinsfile in the repository)
 * Select `GitHub hook trigger for GITScm polling` as Build Trigger for Build Configuration
